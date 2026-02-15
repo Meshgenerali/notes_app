@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
+            $table->softDeletes();
 
             // each note belongs to a user
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
