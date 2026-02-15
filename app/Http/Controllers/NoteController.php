@@ -90,6 +90,8 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        abort_unless($note->user_id === auth()->id(), 403);
+        $note->delete();
+        return redirect()->route('notes.index')->with('success', 'Note Deleted Successfully!');
     }
 }

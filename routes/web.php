@@ -22,6 +22,7 @@ Route::middleware([
     Route::get('/notes', 'index')->name('notes.index');
     Route::get('/notes/{note}', 'show')->name('notes.show');
     Route::put('/notes/{note}', 'update')->name('notes.update');
+    Route::delete('/notes/{note}', 'destroy')->name('notes.destroy');
 });
 
 });
