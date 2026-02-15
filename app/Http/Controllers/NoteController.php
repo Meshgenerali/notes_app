@@ -69,7 +69,20 @@ class NoteController extends Controller
      */
     public function update(Request $request, Note $note)
     {
-        dd('Update Checked');
+        // ensure user owns the note
+        abort_unless($note->user_id === auth()->id(), 403);
+        
+        // validate input
+
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'content' => 'required|string',
+        ]);
+
+        // update note
+
+        $note->update($validated);
+        return redirect()->back()->with('success', 'Note Updated Successfully!');
     }
 
     /**
