@@ -47,7 +47,8 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        abort_unless($note->user_id === auth()->id(), 403);
+        // abort_unless($note->user_id === auth()->id(), 403);
+        $this->authorize('view', $note);
         $notes = auth()->user()->notes()->latest()->get();
 
         return view('welcome', [
@@ -70,7 +71,8 @@ class NoteController extends Controller
     public function update(Request $request, Note $note)
     {
         // ensure user owns the note
-        abort_unless($note->user_id === auth()->id(), 403);
+       // abort_unless($note->user_id === auth()->id(), 403);
+        $this->authorize('update', $note);
         
         // validate input
 
@@ -90,7 +92,8 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        abort_unless($note->user_id === auth()->id(), 403);
+        // abort_unless($note->user_id === auth()->id(), 403);
+        $this->authorize('delete', $note);
         $note->delete();
         return redirect()->route('notes.index')->with('success', 'Note Deleted Successfully!');
     }
